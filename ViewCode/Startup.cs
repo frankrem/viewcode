@@ -80,18 +80,41 @@ namespace ViewCode
 
             app.UseStaticFiles();
 
+            app.UseIdentity();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                AuthenticationScheme = "publisherCookie",
                 AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
+                AutomaticChallenge = false,
                 LoginPath = new PathString("/signin"),
-                LogoutPath = new PathString("/signout")
+                LogoutPath = new PathString("/signout"),
+            });
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {                
+                AuthenticationScheme = "viewerCookie",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = false,
+                LoginPath = new PathString("/signin"),
+                LogoutPath = new PathString("/signout"),
             });
 
             app.UseGitHubAuthentication(options =>
             {
+                options.SignInScheme = "viewerCookie";
+                options.AuthenticationScheme = "viewer";
                 options.ClientId = "aeef316153ca4f8652c7";
-                options.ClientSecret = "f90a07f5266b27499a1299c2889a7c0ec4e423c0";
+                options.ClientSecret = "000282cdb8c4db0294b584f8c9493b116f187e24";
+            });
+
+            app.UseGitHubAuthentication(options =>
+            {
+                options.SignInScheme = "publisherCookie";
+                options.AuthenticationScheme = "publisher";
+                options.ClientId = "e185957506e6e87e4914";
+                options.ClientSecret = "28d91d6ea1b69553aafabe6a5dd02a617b6e72d8";
+                options.Scope.Add("repo");
             });
 
             app.UseMvc(routes =>
