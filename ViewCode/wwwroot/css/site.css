@@ -48,3 +48,8 @@ textarea {
         display: none;
     }
 }
+
+div.user span.glyphicon {
+    margin-top: 20px;
+    font-size: 60px;
+}

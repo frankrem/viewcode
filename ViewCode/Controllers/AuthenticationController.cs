@@ -13,9 +13,6 @@ namespace Mvc.Client.Controllers
 {
     public class AuthenticationController : Controller
     {
-        [HttpGet("~/signin")]
-        public IActionResult SignIn() => View("SignIn", HttpContext.GetExternalProviders());
-
         [HttpPost("~/signin")]
         public IActionResult SignIn([FromForm] string provider)
         {
@@ -34,8 +31,7 @@ namespace Mvc.Client.Controllers
             // Instruct the middleware corresponding to the requested external identity
             // provider to redirect the user agent to its own authorization endpoint.
             // Note: the authenticationScheme parameter must match the value configured in Startup.cs
-            var c = Challenge(new AuthenticationProperties { RedirectUri = "/" }, provider );
-            return c;
+            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, provider);
         }
 
         [HttpGet("~/signout"), HttpPost("~/signout")]
@@ -44,8 +40,7 @@ namespace Mvc.Client.Controllers
             // Instruct the cookies middleware to delete the local cookie created
             // when the user agent is redirected from the external identity provider
             // after a successful authentication flow (e.g Google or Facebook).
-            return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-                CookieAuthenticationDefaults.AuthenticationScheme);
+            return SignOut(new AuthenticationProperties { RedirectUri = "/" }, "publisherCookie", "viewerCookie");
         }
     }
 }

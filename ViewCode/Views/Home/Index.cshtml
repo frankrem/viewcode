@@ -21,8 +21,36 @@
 
     else
     {
-        <h1>viewco.de</h1>
-        <p>Authorize specific users to view-only your GitHub repository</p>
-        <a class="btn btn-lg btn-success" href="/signin?returnUrl=%2F">Get started</a>
-    }
+        <div class="row">
+            <div class="col-md-2">
+                <div class="text-center user">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="text-uppercase text-primary">I want to publish</p>
+                <p class="text-muted">I have a GitHub repository that I want to publish as view-only to selected GitHub users.</p>
+                <form action="/signin" method="post" style="display:inline">
+                    <input type="hidden" name="Provider" value="publisher" />
+                    <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </form>
+            </div>
+            <div class="col-md-2">
+                <div class="text-center user">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="text-uppercase">I want to view</p>
+                <p>I want to view a GitHub repository that was published for me on <code>viewon.ly</code>.</p>
+                <form action="/signin" method="post" style="display:inline">
+                    <input type="hidden" name="Provider" value="viewer" />
+                    <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </form>
+            </div>
+        </div>    }
 </div>
