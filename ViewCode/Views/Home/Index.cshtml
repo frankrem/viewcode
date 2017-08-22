@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model string
+
+<div class="jumbotron">
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h1>Welcome, @User.Identity.Name</h1>
+
+        <p>
+            @foreach (var claim in Context.User.Claims)
+            {
+                <div>@claim.Type: <b>@claim.Value</b></div>
+            }
+        </p>
+
+        <a class="btn btn-lg btn-danger" href="/signout?returnUrl=%2F">Sign out</a>
+    }
+
+    else
+    {
+        <h1>viewco.de</h1>
+        <p>Authorize specific users to view-only your GitHub repository</p>
+        <a class="btn btn-lg btn-success" href="/signin?returnUrl=%2F">Get started</a>
+    }
+</div>
